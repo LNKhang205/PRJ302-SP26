@@ -8,16 +8,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.UserDAO;
-import model.UserDTO;
-/**
- *
- * @author VNT
- */
-public class MainController extends HttpServlet {
+import javax.servlet.http.HttpSession;
+
+
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,28 +28,12 @@ public class MainController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String Usename = request.getParameter("Usename");
-            String Password = request.getParameter("Password");
-            String url ="";
-            UserDAO udao = new UserDAO();
-            UserDTO user = udao.login(Usename, Password);
-            try {
-                if(user != null){
-                    url = "a.jsp";
-                    request.setAttribute("user", user);
-                }else
-                    url = "login.jsp";
-                request.setAttribute("message", "Invalid UserName or PassWord!!!");
-            } catch (Exception e) {
-                url = "login.jsp";
-                request.setAttribute("message", "co loi xay ra trong qua trinh thuc hien");
-            }
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user")!=null){
+            session.invalidate(); // huy bo moi thu trong session;
         }
+        String url = "MainController";
+        response.sendRedirect(url);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

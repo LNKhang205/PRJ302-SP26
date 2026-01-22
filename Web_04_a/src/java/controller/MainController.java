@@ -13,10 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.UserDAO;
 import model.UserDTO;
-/**
- *
- * @author VNT
- */
+
 public class MainController extends HttpServlet {
 
     /**
@@ -33,24 +30,27 @@ public class MainController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String Usename = request.getParameter("Usename");
-            String Password = request.getParameter("Password");
-            String url ="";
+          
+            String txtUsername = request.getParameter("Usename");
+            String txtPassword = request.getParameter("Password");
+            
+            String url = "";
+//            
             UserDAO udao = new UserDAO();
-            UserDTO user = udao.login(Usename, Password);
-            try {
-                if(user != null){
-                    url = "a.jsp";
-                    request.setAttribute("user", user);
-                }else
-                    url = "login.jsp";
-                request.setAttribute("message", "Invalid UserName or PassWord!!!");
-            } catch (Exception e) {
+            UserDTO user = udao.login(txtUsername, txtPassword);
+//            url = "a.jsp";
+//                request.setAttribute("user", user);
+            if(user!=null){
+                url = "a.jsp";
+                request.setAttribute("user", user);
+            }else{
                 url = "login.jsp";
-                request.setAttribute("message", "co loi xay ra trong qua trinh thuc hien");
+                request.setAttribute("message", "Invalid username or password!");
             }
+            
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+           
         }
     }
 

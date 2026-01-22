@@ -11,12 +11,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.UserDAO;
 import model.UserDTO;
-/**
- *
- * @author VNT
- */
+
 public class MainController extends HttpServlet {
 
     /**
@@ -31,27 +29,31 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String Usename = request.getParameter("Usename");
-            String Password = request.getParameter("Password");
-            String url ="";
+        /* TODO output your page here. You may use following sample code. */
+        HttpSession session = request.getSession();
+        String url = "";
+
+        if (session.getAttribute("user") == null) {
+            String txtUsername = request.getParameter("Username");
+            String txtPassword = request.getParameter("Password");
+
             UserDAO udao = new UserDAO();
-            UserDTO user = udao.login(Usename, Password);
-            try {
-                if(user != null){
-                    url = "a.jsp";
-                    request.setAttribute("user", user);
-                }else
-                    url = "login.jsp";
-                request.setAttribute("message", "Invalid UserName or PassWord!!!");
-            } catch (Exception e) {
+            UserDTO user = udao.login(txtUsername, txtPassword);
+            if (user != null) {
+                url = "a.jsp";
+                session.setAttribute("user", user);
+            } else {
                 url = "login.jsp";
-                request.setAttribute("message", "co loi xay ra trong qua trinh thuc hien");
+                request.setAttribute("message", "Invalid username or password!");
             }
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+
+        } else {
+            url = "a.jsp";
         }
+
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
