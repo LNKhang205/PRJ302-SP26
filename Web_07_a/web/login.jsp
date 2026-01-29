@@ -6,6 +6,8 @@
 
 <%@page import="model.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,23 +15,17 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%
-        UserDTO user = (UserDTO) session.getAttribute("user");
-        if(user != null){
-            response.sendRedirect("a.jsp");
-            return;
-        }
-        %>
+        <c:if test="${not empty user}">
+            <c:redirect url="a.jsp"/>
+        </c:if>
         <form action="MainController" method="post">
             <input type="hidden" name="action" value="login" />
             Username: <input type="text" name="Username" required=""/><br/>
             Password: <input type="password" name="Password" required=""/><br/>
             <input type="submit" value="Login"/>
         </form>
-        <%
-          String message = request.getAttribute("message") + "";
-          message = (message.equals("null")) ? "" : message;
-        %>
-        <span style="color: red"><%=message%> </span>
+        <c:if test="${not empty message}">
+            <span style="color: red">${message}</span>
+        </c:if>
     </body>
 </html>
