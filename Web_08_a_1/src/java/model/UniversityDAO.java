@@ -102,5 +102,18 @@ public class UniversityDAO {
         }
         return false;
     }
-    
+    public UniversityDTO updateUniversity(String id){
+        try {
+            Connection conn = DbUtils.getConnection();
+            String sql = "UPDATE tblUniversity SET status=0 WHERE id=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            System.out.println(id + "-" + sql);
+            return ps.executeUpdate()>0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return ;
+    }
 }
