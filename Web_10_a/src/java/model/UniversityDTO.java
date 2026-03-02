@@ -9,20 +9,20 @@ package model;
  * @author VNT
  */
 public class UniversityDTO {
-    private String id, name, shortName, decription;
+    private String id, name, shortName, description;
     private int foundedYear;
     private String address, city, region, type;
     private int totalStudents, totalFaculties;
-    private boolean isDraft, status;
+    private boolean isDraft;
 
     public UniversityDTO() {
     }
 
-    public UniversityDTO(String id, String name, String shortName, String decription, int foundedYear, String address, String city, String region, String type, int totalStudents, int totalFaculties, boolean isDraft) {
+    public UniversityDTO(String id, String name, String shortName, String description, int foundedYear, String address, String city, String region, String type, int totalStudents, int totalFaculties, boolean isDraft) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
-        this.decription = decription;
+        this.description = description;
         this.foundedYear = foundedYear;
         this.address = address;
         this.city = city;
@@ -57,12 +57,12 @@ public class UniversityDTO {
         this.shortName = shortName;
     }
 
-    public String getDecription() {
-        return decription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDecription(String decription) {
-        this.decription = decription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getFoundedYear() {

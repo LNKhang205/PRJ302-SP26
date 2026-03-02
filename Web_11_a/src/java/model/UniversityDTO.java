@@ -8,8 +8,16 @@ package model;
  *
  * @author VNT
  */
-public class UniversityDTO {
-    private String id, name, shortName, decription;
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tblUniversity")
+public class UniversityDTO implements Serializable {
+    @Id
+    private String id, name, shortName, description;
     private int foundedYear;
     private String address, city, region, type;
     private int totalStudents, totalFaculties;
@@ -18,11 +26,11 @@ public class UniversityDTO {
     public UniversityDTO() {
     }
 
-    public UniversityDTO(String id, String name, String shortName, String decription, int foundedYear, String address, String city, String region, String type, int totalStudents, int totalFaculties, boolean isDraft) {
+    public UniversityDTO(String id, String name, String shortName, String description, int foundedYear, String address, String city, String region, String type, int totalStudents, int totalFaculties, boolean isDraft) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
-        this.decription = decription;
+        this.description = description;
         this.foundedYear = foundedYear;
         this.address = address;
         this.city = city;
@@ -57,12 +65,12 @@ public class UniversityDTO {
         this.shortName = shortName;
     }
 
-    public String getDecription() {
-        return decription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDecription(String decription) {
-        this.decription = decription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getFoundedYear() {
@@ -128,6 +136,17 @@ public class UniversityDTO {
     public void setIsDraft(boolean isDraft) {
         this.isDraft = isDraft;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    
     
     
 }
+
